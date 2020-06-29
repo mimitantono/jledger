@@ -8,4 +8,9 @@ import lombok.RequiredArgsConstructor;
 public class Currency {
 
   private final String name;
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

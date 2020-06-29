@@ -1,6 +1,7 @@
 package com.company.jledger.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,5 +29,23 @@ public class Transaction {
       return false;
     }
     return true;
+  }
+
+  public String printFor(Label label) {
+    if (fromAccount.hasLabel(label)) {
+      return String.format("%s\t%s\t%s\t%s",
+          date.format(DateTimeFormatter.ISO_DATE),
+          description,
+          toAccount,
+          toAmount);
+    }
+    if (toAccount.hasLabel(label)) {
+      return String.format("%s\t%s\t%s\t%s",
+          date.format(DateTimeFormatter.ISO_DATE),
+          description,
+          fromAccount,
+          fromAmount.reverse());
+    }
+    throw new IllegalArgumentException("This should never happen");
   }
 }

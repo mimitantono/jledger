@@ -53,7 +53,7 @@ public class TransactionImporter {
     Account fromAccount = extractAccount(columns.get(2));
     Amount fromAmount = extractAmount(columns.get(3));
     Account toAccount = extractAccount(columns.get(4));
-    Amount toAmount = reverse(fromAmount);
+    Amount toAmount = fromAmount.reverse();
     if (columns.size() > 5) {
       toAmount = extractAmount(columns.get(5));
     }
@@ -69,13 +69,6 @@ public class TransactionImporter {
       throw new IllegalArgumentException("Invalid transaction");
     }
     return transaction;
-  }
-
-  private Amount reverse(Amount fromAmount) {
-    return Amount.builder()
-        .bigDecimal(fromAmount.getBigDecimal().negate())
-        .currency(fromAmount.getCurrency())
-        .build();
   }
 
   private Amount extractAmount(String column) {

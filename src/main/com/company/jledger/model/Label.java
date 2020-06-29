@@ -1,16 +1,24 @@
 package com.company.jledger.model;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
-@ToString(exclude = "level")
+@RequiredArgsConstructor
 public class Label {
 
-  private final int level;
   private final String namespace;
+
+  public Label(String[] labels) {
+    namespace = Arrays.stream(labels).collect(Collectors.joining(":"));
+  }
+
+  @Override
+  public String toString() {
+    return namespace;
+  }
 }
