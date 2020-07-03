@@ -30,4 +30,8 @@ public class Account {
   public String toString() {
     return namespace;
   }
+
+  public boolean isIncome() {
+    return namespace.startsWith("Income");
+  }
 }

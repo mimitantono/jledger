@@ -27,8 +27,7 @@ public class ReportGenerator {
 
   public void generateReport() {
     List<AccountBalance> accountBalances = calculateBalance(transactionMap);
-    accountBalances.stream().sorted(Comparator.comparing(AccountBalance::getLabelNamespace))
-        .forEach(x -> System.out.println(x));
+    new ReportDecorator().printBalances(accountBalances);
   }
 
   public void listAccountTransactions(Label label) {
@@ -37,9 +36,7 @@ public class ReportGenerator {
       System.out.println("N/A");
       return;
     }
-    transactionMap.get(label)
-        .stream()
-        .forEach(x -> System.out.println(x.printFor(label)));
+    new ReportDecorator().printTransactions(transactionMap, label);
   }
 
   private List<AccountBalance> calculateBalance(Map<Label, List<Transaction>> map) {
@@ -70,8 +67,5 @@ public class ReportGenerator {
               map.computeIfAbsent(label, x -> new ArrayList<>()).add(transaction));
     }
     return map;
-  }
-
-  private void printTable() {
   }
 }

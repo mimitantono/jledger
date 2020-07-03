@@ -19,6 +19,15 @@ public class Transaction {
   private final Amount fromAmount;
   private Amount toAmount;
 
+  public static String[] getColumnNames() {
+    return new String[]{
+        "Date",
+        "Description",
+        "Account",
+        "Amount"
+    };
+  }
+
   public boolean isValid() {
     if (Objects.equals(fromAccount, toAccount)) {
       log.error("From and to account cannot be the same");
@@ -31,20 +40,20 @@ public class Transaction {
     return true;
   }
 
-  public String printFor(Label label) {
+  public Object[] getRow(Label label) {
     if (fromAccount.hasLabel(label)) {
-      return String.format("%s\t%s\t%s\t%s",
+      return new Object[]{
           date.format(DateTimeFormatter.ISO_DATE),
           description,
           toAccount,
-          toAmount);
+          fromAmount};
     }
     if (toAccount.hasLabel(label)) {
-      return String.format("%s\t%s\t%s\t%s",
+      return new Object[]{
           date.format(DateTimeFormatter.ISO_DATE),
           description,
           fromAccount,
-          fromAmount.reverse());
+          toAmount};
     }
     throw new IllegalArgumentException("This should never happen");
   }
