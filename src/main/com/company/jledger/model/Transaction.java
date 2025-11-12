@@ -1,5 +1,6 @@
 package com.company.jledger.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class Transaction {
       log.error("From and to account cannot be the same");
       return false;
     }
-    if (fromAmount.getBigDecimal().add(toAmount.getBigDecimal()).intValue() > 0) {
+    if (fromAmount.getBigDecimal().add(toAmount.getBigDecimal()).compareTo(BigDecimal.ZERO) != 0) {
       log.error("From and to amount must be balanced");
       return false;
     }
